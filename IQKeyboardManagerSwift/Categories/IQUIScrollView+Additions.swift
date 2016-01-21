@@ -1,5 +1,5 @@
 //
-//  IQKeyboardManagerConstantsInternal.h
+//  IQUIScrollView+Additions.swift
 // https://github.com/hackiftekhar/IQKeyboardManager
 // Copyright (c) 2013-15 Iftekhar Qurashi.
 //
@@ -21,35 +21,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef IQKeyboardManagerConstantsInternal_h
-#define IQKeyboardManagerConstantsInternal_h
+import Foundation
+import UIKit
 
+private var kIQShouldRestoreScrollViewContentOffset = "kIQShouldRestoreScrollViewContentOffset"
 
-///-----------------------------------
-/// @name IQLayoutGuidePosition
-///-----------------------------------
-
-/**
- `IQLayoutGuidePositionNone`
- If there are no IQLayoutGuideConstraint associated with viewController
- 
- `IQLayoutGuidePositionTop`
- If provided IQLayoutGuideConstraint is associated with with viewController topLayoutGuide
- 
- `IQLayoutGuidePositionBottom`
- If provided IQLayoutGuideConstraint is associated with with viewController bottomLayoutGuide
- */
-typedef NS_ENUM(NSInteger, IQLayoutGuidePosition) {
-    IQLayoutGuidePositionNone,
-    IQLayoutGuidePositionTop,
-    IQLayoutGuidePositionBottom,
-};
-
-//Xcode 6 compatibility check
-#ifdef NSFoundationVersionNumber_iOS_7_1
-    #define IQ_IS_IOS8_OR_GREATER (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1)
-#else
-    #define IQ_IS_IOS8_OR_GREATER NO
-#endif
-
-#endif
+public extension UIScrollView {
+    
+    /**
+     To set customized distance from keyboard for textField/textView. Can't be less than zero
+     */
+    public var shouldRestoreScrollViewContentOffset: Bool {
+        get {
+            
+            if let aValue = objc_getAssociatedObject(self, &kIQShouldRestoreScrollViewContentOffset) as? Bool {
+                return aValue
+            } else {
+                return false
+            }
+        }
+        set(newValue) {
+            objc_setAssociatedObject(self, &kIQShouldRestoreScrollViewContentOffset, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+}

@@ -58,14 +58,14 @@ alt="IQKeyboardManager Demo Video" width="480" height="360" border="10" /></a>
 #### IQKeyboardManager:-
 [![Objective-c](https://img.shields.io/badge/Language-Objective C-blue.svg?style=flat)](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
 
-Minimum iOS Target: iOS 6.0
+Minimum iOS Target: iOS 7.0
 
-Minimum Xcode Version: Xcode 4.5
+Minimum Xcode Version: Xcode 5.1.1
 
 #### IQKeyboardManagerSwift:-
 [![Swift 2 compatible](https://img.shields.io/badge/Language-Swift2-blue.svg?style=flat)](https://developer.apple.com/swift)
 
-Minimum iOS Target: iOS 8.0
+Minimum iOS Target: iOS 7.0
 
 Minimum Xcode Version: Xcode 7
 
@@ -177,6 +177,22 @@ If you set ***[[IQKeyboardManager sharedManager] setEnable:NO]*** and still auto
 ####3) Not working when pinning textfield from TopLayoutguide ([#124](https://github.com/hackiftekhar/IQKeyboardManager/issues/124), [#137](https://github.com/hackiftekhar/IQKeyboardManager/issues/137), [#160](https://github.com/hackiftekhar/IQKeyboardManager/issues/160), [#206](https://github.com/hackiftekhar/IQKeyboardManager/issues/206))
 
 Now IQKeyboardManager can work with topLayoutConstraint and bottomLayoutConstraint with a bit of manual management. Please check below ***Manual Management->Working with TopLayoutGuide and BottomLayoutGuide*** section.
+
+####4) Toolbar becomes black while popping from a view controller ([#374](https://github.com/hackiftekhar/IQKeyboardManager/issues/374))
+
+This issue happens when there is a textField active on a view controller and you navigate to another view controller without resigning currently active textField. This is an iOS issue and happens even if you don't integrate library.
+
+![image](https://raw.githubusercontent.com/hackiftekhar/IQKeyboardManager/master/Screenshot/BlackToolbarIssue.jpg)
+
+For a workaround, you can resign currently active textField in `viewWillDisappear` method.
+
+```
+  -(void)viewWillDisappear:(BOOL)animated
+  {
+    [super viewWillDisappear:animated];
+    [self.view endEditing:YES];
+  }
+```
 
 ## Known Issues (Swift):-
 
